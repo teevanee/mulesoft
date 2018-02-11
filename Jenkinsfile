@@ -6,7 +6,7 @@ pipeline {
            "files": [
                {
                "pattern": "target/*.zip",
-                   "target": "libs-snapshot-local/dk/redpill_linpro/mulesoft_integration_builds/"
+                   "target": "libs-snapshot-local/tve/mulesoft_integration_builds/"
                }
            ]
     }"""
@@ -24,18 +24,6 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Test') {
-            steps { 
-                configFileProvider(
-                    [configFile(fileId: 'mulesoft-maven-settings', variable: 'MAVEN_SETTINGS')]) {
-                    withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-                               withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'mule-builder', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                      sh 'mvn -s $MAVEN_SETTINGS -Ddeploy.username=$USERNAME -Ddeploy.password=$PASSWORD deploy -DskipTests=true'
-                      }
-                    }
-                }
-            }
-        }
         stage('Upload Artifact') {
             steps {
                 withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
@@ -44,6 +32,18 @@ pipeline {
                                         server.bypassProxy = true
                                         def buildInfo = server.upload spec: uploadSpec
                                         }
+                    }
+                }
+            }
+        }
+        stage('Deploy Test') {
+            steps { 
+                configFileProvider(
+                    [configFile(fileId: 'mulesoft-maven-settings', variable: 'MAVEN_SETTINGS')]) {
+                    withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                               withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'mule-builder', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                      sh 'mvn -s $MAVEN_SETTINGS -Ddeploy.username=$USERNAME -Ddeploy.password=$PASSWORD deploy -DskipTests=true'
+                      }
                     }
                 }
             }
