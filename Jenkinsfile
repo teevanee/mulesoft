@@ -6,7 +6,7 @@ pipeline {
            "files": [
                {
                "pattern": "target/*.zip",
-                   "target": "libs-snapshot-local/tve/mulesoft_integration_builds/"
+                   "target": "example-repo-local/mulesoft_integration_builds/"
                }
            ]
     }"""
