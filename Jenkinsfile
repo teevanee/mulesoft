@@ -35,7 +35,6 @@ pipeline {
                     }
                 }
             }
-        }
         stage('Deploy Test') {
             steps { 
                 configFileProvider(
@@ -48,5 +47,5 @@ pipeline {
                 }
             }
         }
+      }
 }
-
