@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'mule'}
+    agent any
     environment {
        def mvn_version = 'M3'
            def uploadSpec = """{
