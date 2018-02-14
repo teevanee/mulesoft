@@ -27,8 +27,13 @@
            </configuration>
           <executions>
              <execution>
+                <id>undeploy</id>
+                <goals>
+                   <goal>undeploy</goal>
+               </goals>
+          </execution>
+		   <execution>
                 <id>deploy</id>
-                <phase>deploy</phase>
                 <goals>
                    <goal>deploy</goal>
                </goals>
