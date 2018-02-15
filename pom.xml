@@ -22,16 +22,10 @@
            <artifactId>mule-maven-plugin</artifactId>
            <version>2.2.1</version>
            <configuration>
-               <deploymentType>standalone</deploymentType>
-               <muleHome>/opt/mule/mule-standalone-3.9.0</muleHome>
+               <deploymentType>agent</deploymentType>
+               <uri>http://localhost:9999/</uri>
            </configuration>
           <executions>
-             <execution>
-                <id>undeploy</id>
-                <goals>
-                   <goal>undeploy</goal>
-               </goals>
-          </execution>
 		   <execution>
                 <id>deploy</id>
                 <goals>
