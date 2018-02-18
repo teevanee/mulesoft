@@ -15,6 +15,23 @@
 		<mule.version>3.9.0</mule.version>
     	<mule.tools.version>1.2</mule.tools.version>
 	</properties>
+	 <!--distributionManagement>
+       <snapshotRepository>
+        <id>snapshot-nexus</id>
+        <name>Snapshot Nexus</name>
+        <url>http://10.58.11.153:8081/nexus/repository/mule-snapshots</url>
+       </snapshotRepository>
+    </distributionManagement-->
+	<distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://192.168.56.101:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://192.168.56.101:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
 	<build>
 		<plugins>
 		<plugin>
