@@ -28,7 +28,18 @@ pipeline {
             steps {
                 withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
                                  script {
-                                        def server = Artifactory.newServer url: 'http://192.168.56.102:8081:8081/artifactory', credentialsId: 'mulesoft-artifactory'
+                                        def server = Artifactory.newServer url: 'http://192.168.56.102:8081/artifactory', credentialsId: 'mulesoft-artifactory'
+                                        server.bypassProxy = true
+                                        def buildInfo = server.upload spec: uploadSpec
+                                        }
+                    }
+                }
+            }
+		 stage('Upload Nexus') {
+            steps {
+                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+                                 script {
+                                        def server = Nexus.newServer url: 'http://192.168.56.101:8081/repository/mule-group', credentialsId: 'mulesoft-nexus'
                                         server.bypassProxy = true
                                         def buildInfo = server.upload spec: uploadSpec
                                         }
