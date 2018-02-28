@@ -37,16 +37,23 @@ pipeline {
             }
 		 stage('Upload Nexus') {
             steps {
-                withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
-                                 script {
-                                        def server = Nexus.newServer url: 'http://192.168.56.101:8081/repository/mule-group', credentialsId: 'mulesoft-nexus'
-                                        server.bypassProxy = true
-                                        def buildInfo = server.upload spec: uploadSpec
-                                        }
+                 nexusArtifactUploader {
+                 nexusVersion('nexus3')
+                 protocol('http')
+                 nexusUrl('192.168.56.101:8081/repository')
+                 groupId('mule-group')
+                 version('2.4')
+                 repository('NexusArtifactUploader')
+                 credentialsId('mulesoft-nexus')
+                       artifact {
+                         artifactId('mulesoft-nexus-demo')
+                         type('zip')
+                         classifier('debug')
+                         file('nexus-artifact-uploader.jar')}
                     }
-                }
-            }
-        stage('Deploy Test') {
+              }
+		    },
+			stage('Deploy Test') {
             steps { 
                 configFileProvider(
                     [configFile(fileId: 'mulesoft-maven-settings', variable: 'MAVEN_SETTINGS')]) {
